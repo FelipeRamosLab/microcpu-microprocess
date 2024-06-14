@@ -11,7 +11,7 @@ const int resetPin = 14; // LoRa radio reset
 const int irqPin = 26;   // LoRa radio IRQ
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   while (!Serial);
 
   Serial.println("LoRa Receiver");
@@ -37,8 +37,8 @@ void loop() {
       Serial.print((char)LoRa.read());
     }
 
-    // Print RSSI of packet
-    Serial.print(" with RSSI ");
-    Serial.println(LoRa.packetRssi());
+    Serial.println("");
   }
+
+  delay(10);
 }
