@@ -157,6 +157,21 @@ class Lora32WifiBleV2 {
       LoRa.print(toSend);
       LoRa.endPacket();
     }
+
+    String readString() {
+      String received = "";
+
+      // Try to parse packet
+      int packetSize = LoRa.parsePacket();
+      if (packetSize) {
+        // Read packet
+        while (LoRa.available()) {
+          received += (char)LoRa.read();
+        }
+      }
+
+      return received;
+    }
 };
 
 #endif // LORA32WIFIBLEV2_H
