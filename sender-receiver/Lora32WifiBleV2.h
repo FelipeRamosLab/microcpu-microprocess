@@ -105,15 +105,30 @@ class Lora32WifiBleV2 {
       this->display.display();
     }
 
+    /**
+     * @brief Sets the initial string to be displayed and starts a new display view.
+     * @param text The initial text to be displayed.
+     * @param x The x-coordinate for the text. Default is 5.
+     * @param y The y-coordinate for the text. Default is 5.
+     */
     void displayStartString(String text, int x = 5, int y = 5) {
       this->currentView = text;
     }
 
+    /**
+     * @brief Adds a new line of text to the current display view.
+     * @param text The text to be added.
+     * @param x The x-coordinate for the text. Default is 5.
+     * @param y The y-coordinate for the text. Default is 5.
+     */
     void displayBreakLine(String text, int x = 5, int y = 5) {
       this->currentView += "\n";
       this->currentView += text;
     }
 
+    /**
+     * @brief Ends the current display view and refreshes the display.
+     */
     void displayEndString() {
       this->displayView(this->currentView);
     }
@@ -140,24 +155,42 @@ class Lora32WifiBleV2 {
       this->display.display();
     }
 
+    /**
+     * @brief Begins a LoRa packet.
+     */
     void beginPacket() {
       LoRa.beginPacket();
     }
 
+    /**
+     * @brief Ends a LoRa packet.
+     */
     void endPacket() {
       LoRa.endPacket();
     }
 
+    /**
+     * @brief Sends a string via LoRa.
+     * @param toSend The string to be sent.
+     */
     void sendString(String toSend) {
       LoRa.print(toSend);
     }
 
+    /**
+     * @brief Sends a string as a LoRa packet.
+     * @param toSend The string to be sent.
+     */
     void sendStringPacket(String toSend) {
       LoRa.beginPacket();
       LoRa.print(toSend);
       LoRa.endPacket();
     }
 
+    /**
+     * @brief Reads a string received via LoRa.
+     * @return The received string.
+     */
     String readString() {
       String received = "";
 
