@@ -12,6 +12,7 @@ void setup() {
 void loop() {
   if (INSTANCE_TYPE == "RECEIVER") {
     String received = lora32.readString();
+
     if (received != "") {
       // Printing to display
       lora32.displayStartString(INSTANCE_TYPE + ":");
@@ -26,6 +27,7 @@ void loop() {
     String toSend = "Hi, I'm " + INSTANCE_TYPE + " " + String(counter);
     lora32.sendStringPacket(toSend);
 
+    // Printing to display
     lora32.displayStartString(INSTANCE_TYPE + ":");
     lora32.displayBreakLine("We are sending:");
     lora32.displayBreakLine(toSend);
