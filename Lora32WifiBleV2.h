@@ -22,6 +22,7 @@ class Lora32WifiBleV2 {
     int CS_PIN = 18;
     int RESET_PIN = 14;
     int IRQ_PIN = 26;
+    String currentView = "";
     SSD1306 display;
 
     /**
@@ -104,6 +105,19 @@ class Lora32WifiBleV2 {
       this->display.display();
     }
 
+    void displayStartString(String text, int x = 5, int y = 5) {
+      this->currentView = text;
+    }
+
+    void displayBreakLine(String text, int x = 5, int y = 5) {
+      this->currentView += "\n";
+      this->currentView += text;
+    }
+
+    void displayEndString() {
+      this->displayView(this->currentView);
+    }
+
     /**
      * @brief Prints a string at the specified coordinates on the display.
      * @param text The text to be printed.
@@ -124,6 +138,24 @@ class Lora32WifiBleV2 {
       this->display.clear();
       this->displayPrintString(text, x, y);
       this->display.display();
+    }
+
+    void beginPacket() {
+      LoRa.beginPacket();
+    }
+
+    void endPacket() {
+      LoRa.endPacket();
+    }
+
+    void sendString(String toSend) {
+      LoRa.print(toSend);
+    }
+
+    void sendStringPacket(String toSend) {
+      LoRa.beginPacket();
+      LoRa.print(toSend);
+      LoRa.endPacket();
     }
 };
 
