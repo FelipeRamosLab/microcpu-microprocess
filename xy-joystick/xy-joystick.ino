@@ -1,17 +1,12 @@
 #include <Lora32WifiBleV2.h>
 #include <JoystickXY.h>
-#include <SPI.h>
-#include <LoRa.h>
-
-// Pin configuration for LoRa32 WiFi BLE V2
-const int csPin = 18;    // LoRa radio chip select
-const int resetPin = 14; // LoRa radio reset
-const int irqPin = 26;   // LoRa radio IRQ
 
 JoystickXY joystick;
 Lora32WifiBleV2 lora32;
 
 void setup() {
+  Serial.begin(1000000, SERIAL_8N1, 3, 1);
+
   lora32.init();
   joystick.init();
 }
@@ -28,7 +23,12 @@ void loop() {
   lora32.displayBreakLine("Button: " + String(buttonState == LOW ? "Pressed" : "Released"));
   lora32.displayEndString();
 
-  lora32.sendStringPacket("X: " + String(rawXValue) + " | " + "Y: " + String(rawYValue));
+  // Building the querystring
+  String dataToSend = "/drive?x=" + String(rawXValue) + "&y=" + String(rawYValue);
+  // Sending via serial RX TX
+  Serial.println(dataToSend);
+
+  lora32.sendStringPacket(dataToSend);
   // Wait for a second before sending another packet
-  delay(10);
+  delay(15);
 }

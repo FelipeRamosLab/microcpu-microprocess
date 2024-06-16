@@ -33,35 +33,33 @@ class Lora32WifiBleV2 {
     /**
      * @brief Initializes the module, setting up Serial, LoRa radio, and display.
      */
-    void init() {
-      Serial.begin(115200);
-      while (!Serial);
-
+    bool init() {
       // Starting LoRa radio
       this->startLora();
 
       // Initializing the display
       if (!this->displayBegin()) {
-        Serial.println("Display failed!");
+        return false;
         while (1);
       }
 
       // Configuring the display
       this->displayConfiguration();
+      return true;
     }
 
     /**
      * @brief Initializes the LoRa module with the specified pins and frequency.
      */
-    void startLora() {
+    bool startLora() {
       // Set LoRa module pins
       LoRa.setPins(this->CS_PIN, this->RESET_PIN, this->IRQ_PIN);
       if (!LoRa.begin(this->BAND)) { // Set frequency to 915MHz
-        Serial.println("Starting LoRa failed!");
+        return false;
         while (1);
       }
 
-      Serial.println("LoRa Initializing OK!");
+      return true;
     }
 
     /**
